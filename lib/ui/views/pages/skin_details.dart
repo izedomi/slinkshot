@@ -14,6 +14,26 @@ class SkinDetails extends StatefulWidget {
 }
 
 class _SkinDetailsState extends State<SkinDetails> {
+
+  bool isLoading = true;
+  double _opacity = 0;
+
+  @override
+  void initState() {
+    Future.delayed(
+        Duration(seconds: 3),
+        () => setState(() {
+              isLoading = false;
+            }));
+    Future.delayed(
+        Duration(seconds: 4),
+        () => setState(() {
+              isLoading = false;
+              _opacity = 1;
+            }));
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -21,108 +41,114 @@ class _SkinDetailsState extends State<SkinDetails> {
         width: width(context),
         height: height(context),
         decoration: BoxDecoration(color: bunkerBlack),
-        child: Column(
-          children: [
-            SkinDetailHeader(widget.skin.title),
-            Expanded(
-              child: SingleChildScrollView(
-                child: Container(
-                  width: width(context),
-                  padding:
-                      EdgeInsets.only(
-                        top: 16, 
-                        bottom: 16, 
-                        left: 55, 
-                        right: 55
-                  ),
-                  child: Column(
-                    children: [
-                      horizontalDivider(),
-                      SizedBox(height: 36),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Hero(
-                            tag: widget.skin.id,
-                            child: CircularAvatar(
-                                imageHeight: 140,
-                                imageWidth: 140,
-                                imageUrl: widget.skin.image),
-                          ),
-                          Column(
-                            children: [
-                              Row(
-                                children: [
-                                  Text(widget.skin.price.toString(),
+        child: isLoading ? Center(child: CircularProgressIndicator()) :
+        AnimatedOpacity(
+          duration: Duration(milliseconds: 1000),
+          opacity: _opacity,
+          curve: Curves.easeInQuad,
+          child: Column(
+            children: [
+              SkinDetailHeader(widget.skin.title),
+              Expanded(
+                child: SingleChildScrollView(
+                  child: Container(
+                    width: width(context),
+                    padding:
+                        EdgeInsets.only(
+                          top: 16, 
+                          bottom: 16, 
+                          left: 55, 
+                          right: 55
+                    ),
+                    child: Column(
+                      children: [
+                        horizontalDivider(),
+                        SizedBox(height: 36),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Hero(
+                              tag: widget.skin.id,
+                              child: CircularAvatar(
+                                  imageHeight: 140,
+                                  imageWidth: 140,
+                                  imageUrl: widget.skin.image),
+                            ),
+                            Column(
+                              children: [
+                                Row(
+                                  children: [
+                                    Text(widget.skin.price.toString(),
+                                        style: TextStyle(
+                                          color: Colors.white,
+                                          fontWeight: FontWeight.w700,
+                                          fontSize: 18,
+                                        )),
+                                    SizedBox(width: 3),
+                                    Image.asset(
+                                      'assets/images/price_alt.PNG',
+                                      height: 30,
+                                      fit: BoxFit.cover,
+                                    ),
+                                  ],
+                                ),
+                                SizedBox(height: 12),
+                                Container(
+                                  alignment: Alignment.center,
+                                  padding: EdgeInsets.symmetric(
+                                      horizontal: 12, vertical: 3),
+                                  decoration: BoxDecoration(
+                                      color: Colors.lightGreenAccent,
+                                      gradient: new LinearGradient(
+                                        colors: [
+                                          Color(0xff93af49),
+                                          Color(0xffb59705),
+                                        ],
+                                        begin: Alignment.centerLeft,
+                                        end: Alignment.centerRight,
+                                      ),
+                                      borderRadius: BorderRadius.circular(16)),
+                                  child: Text("Buy Now",
+                                      textAlign: TextAlign.center,
                                       style: TextStyle(
                                         color: Colors.white,
-                                        fontWeight: FontWeight.w700,
-                                        fontSize: 18,
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 12,
                                       )),
-                                  SizedBox(width: 3),
-                                  Image.asset(
-                                    'assets/images/price_alt.PNG',
-                                    height: 30,
-                                    fit: BoxFit.cover,
-                                  ),
-                                ],
-                              ),
-                              SizedBox(height: 12),
-                              Container(
-                                alignment: Alignment.center,
-                                padding: EdgeInsets.symmetric(
-                                    horizontal: 12, vertical: 3),
-                                decoration: BoxDecoration(
-                                    color: Colors.lightGreenAccent,
-                                    gradient: new LinearGradient(
-                                      colors: [
-                                        Color(0xff93af49),
-                                        Color(0xffb59705),
-                                      ],
-                                      begin: Alignment.centerLeft,
-                                      end: Alignment.centerRight,
-                                    ),
-                                    borderRadius: BorderRadius.circular(16)),
-                                child: Text("Buy Now",
-                                    textAlign: TextAlign.center,
-                                    style: TextStyle(
-                                      color: Colors.white,
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 12,
-                                    )),
-                              )
-                            ],
-                          )
-                        ],
-                      ),
-                      SizedBox(height: 36),
-                      horizontalDivider(),
-                      SizedBox(height: 36),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text("Description:",
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontWeight: FontWeight.w800,
-                                fontSize: 20,
-                              )),
-                          SizedBox(height: 3),
-                          Text(
-                              widget.skin.description + widget.skin.description,
-                              style: TextStyle(
-                                color: galleryGrey,
-                                fontWeight: FontWeight.w300,
-                                fontSize: 14,
-                              )),
-                        ],
-                      )
-                    ],
+                                )
+                              ],
+                            )
+                          ],
+                        ),
+                        SizedBox(height: 36),
+                        horizontalDivider(),
+                        SizedBox(height: 36),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text("Description:",
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.w800,
+                                  fontSize: 20,
+                                )),
+                            SizedBox(height: 3),
+                            Text(
+                                widget.skin.description + widget.skin.description,
+                                style: TextStyle(
+                                  color: galleryGrey,
+                                  fontWeight: FontWeight.w300,
+                                  fontSize: 14,
+                                )),
+                          ],
+                        )
+                      ],
+                    ),
                   ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

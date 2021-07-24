@@ -7,7 +7,6 @@ import 'package:slinkshot/core/viewmodel/post_view_model.dart';
 import 'package:slinkshot/ui/shared/app_colors.dart';
 import 'package:slinkshot/ui/views/widgets/loading_background.dart';
 import 'package:slinkshot/ui/views/widgets/items/post_item.dart';
-import 'package:visibility_detector/visibility_detector.dart';
 
 class Home extends StatefulWidget {
   const Home({key}) : super(key: key);
@@ -17,7 +16,7 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  String selectedSize = "All";
+  String selectedTitle = "All";
   bool isLoading = true;
   double _opacity = 0;
 
@@ -84,7 +83,7 @@ class _HomeState extends State<Home> {
                               physics: BouncingScrollPhysics(),
                               itemCount: postViewModel.tempList.length,
                               itemBuilder: (BuildContext context, int index) {
-                                Post post = postViewModel.postList[index];
+                                Post post = postViewModel.tempList[index];
                                 return PostItem(post);
                               },
                               separatorBuilder:
@@ -101,24 +100,24 @@ class _HomeState extends State<Home> {
           );
   }
 
-  Widget buildSizeContainer(String sizeLabel, PostViewModel postViewModel) {
+  Widget buildSizeContainer(String title, PostViewModel postViewModel) {
     return InkWell(
       onTap: () {
-        setState(() => selectedSize = sizeLabel);
-        postViewModel.filterPost(sizeLabel);
+        setState(() => selectedTitle = title);
+        postViewModel.filterPost(title);
       },
       child: Container(
         alignment: Alignment.center,
         padding: EdgeInsets.symmetric(horizontal: 36),
         margin: EdgeInsets.only(right: 6, left: 6),
         decoration: BoxDecoration(
-            color: selectedSize == sizeLabel ? carrotOrange : bunkerBlack,
+            color: selectedTitle == title ? carrotOrange : bunkerBlack,
             borderRadius: BorderRadius.circular(24),
-            border: selectedSize == sizeLabel
+            border: selectedTitle == title
                 ? null
                 : Border.all(color: galleryGrey, width: 1.3)),
         child: Text(
-          sizeLabel,
+          title,
           style: TextStyle(color: galleryGrey, fontWeight: FontWeight.bold),
         ),
       ),

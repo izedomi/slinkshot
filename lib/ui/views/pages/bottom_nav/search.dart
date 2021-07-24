@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:slinkshot/ui/shared/app_colors.dart';
 
 class Search extends StatefulWidget {
-  //const Search({ Key? key }) : super(key: key);
+  const Search({ Key key }) : super(key: key);
 
   @override
   _SearchState createState() => _SearchState();

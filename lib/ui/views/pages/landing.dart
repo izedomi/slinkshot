@@ -16,11 +16,6 @@ class _LandingState extends State<Landing> {
   void initState() {
 
     Future.delayed(
-        Duration(seconds: 4),
-        () => setState(() {
-              _opacity = 1;
-            }));
-    Future.delayed(
         Duration(seconds: 2),
         () => setState(() {
               _titleOpacity = 1;
@@ -62,27 +57,12 @@ class _LandingState extends State<Landing> {
                     "Slinkshot",
                     style: TextStyle(
                         color: baliGrey,
-                        fontSize: 40 * screenWidthFactorRatio(context),
+                        fontSize: 45 * screenWidthFactorRatio(context),
                         fontWeight: FontWeight.w800),
                   ),
                 ),
                 SizedBox(height: 3),
-                AnimatedOpacity(
-                  opacity: _opacity,
-                  duration: Duration(milliseconds: 2500),
-                  child: Text(
-                    "No. 1 Online gaming social network",
-                    style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 16 * screenWidthFactorRatio(context),
-                        //letterSpacing: 1,
-                        fontWeight: FontWeight.w300,
-                        height: 1.3),
-                  ),
-                ),
-                SizedBox(height: 8),
-              ],
-            ),
+              ]),
           )
         ],
       ),

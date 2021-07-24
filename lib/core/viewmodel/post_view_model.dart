@@ -20,37 +20,21 @@ class PostViewModel extends ChangeNotifier {
   void filterPost(String queryString) async {
     print(queryString);
 
-    setViewState(ViewState.Busy);
     tempList = [];
+    setViewState(ViewState.Busy);
 
     if (queryString.toLowerCase() == "all") {
       posts.forEach((post) {
         tempList.add(post);
       });
     } else {
-      // tempList = posts
-      //     .where((post) =>
-      //         post.gameTitle.toLowerCase() == queryString.toLowerCase())
-      //     .toList();
-
-      postList.forEach((post) {
-        //print(post.title);
-        if (post != null) {
-          // if (post.gameTitle
-          //     .toLowerCase()
-          //     .contains(queryString.toLowerCase())) {
-          //   tempList.add(post);
-          // }
-          if (post.gameTitle.toLowerCase() == queryString.toLowerCase()) {
-            tempList.add(post);
-            //print(tempList.gameTitle);
-          }
-          notifyListeners();
-        }
-      });
+      tempList = [];
+      tempList = posts
+          .where((post) =>
+              post.gameTitle.toLowerCase() == queryString.toLowerCase())
+          .toList();
+      print("oeowoe");
     }
-    print(tempList.first.gameTitle);
-    print(tempList.last.gameTitle);
     setViewState(ViewState.Idle);
   }
 }

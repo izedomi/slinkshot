@@ -55,6 +55,7 @@ class _PostItemState extends State<PostItem> {
   @override
   void initState() {
     post = widget.post;
+    print('lfskflksflslfsfksflsfkl');
 
     colorIndex = _rand.nextInt(borderGradients.length - 1);
 
@@ -63,11 +64,9 @@ class _PostItemState extends State<PostItem> {
     kInnerDecoration = innerDecoration(borderRadius: 16);
 
     if (post.format.type.toLowerCase() != "photo") {
-      _controller = VideoPlayerController.network(
-          "https://flutter.github.io/assets-for-api-docs/assets/videos/butterfly.mp4");
-      //_controller = VideoPlayerController.asset("videos/sample_video.mp4");
+      _controller = VideoPlayerController.network(post.contentUrl);
       _initializeVideoPlayerFuture = _controller.initialize();
-      _controller.setLooping(true);
+      _controller.setLooping(false);
       _controller.setVolume(1.0);
       // _controller.play();
     }
@@ -76,18 +75,14 @@ class _PostItemState extends State<PostItem> {
 
   @override
   void dispose() {
-    _controller.dispose();
+    if (post.format.type.toLowerCase() != "photo") {
+      _controller.dispose();
+    }
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    // int colorIndex = _rand.nextInt(borderGradients.length - 1);
-
-    // final kGradientBoxDecoration =
-    //     gradientBoxDecoration(borderRadius: 16, colorIndex: colorIndex);
-    // final kInnerDecoration = innerDecoration(borderRadius: 16);
-
     return VisibilityDetector(
       key: Key(post.id.toString()),
       onVisibilityChanged: (visibilityInfo) {
@@ -117,16 +112,12 @@ class _PostItemState extends State<PostItem> {
                               height: double.infinity,
                               fit: BoxFit.cover,
                               placeholder: (context, url) => Container(),
-                              /*Center(
-                      child: CircularProgressIndicator(
-                        */ /*valueColor: new AlwaysStoppedAnimation<Color>(ebonyClay),*/ /*
-                      )),*/
                               errorWidget: (context, url, error) => Container(
                                 height: 190 * screenWidthFactorRatio(context),
                                 decoration: BoxDecoration(
                                     image: DecorationImage(
                                         image: AssetImage(
-                                            "assets/images/home_bg.png"),
+                                            "assets/images/background.png"),
                                         fit: BoxFit.cover)),
                               ),
                             )
@@ -135,6 +126,7 @@ class _PostItemState extends State<PostItem> {
                               builder: (context, snapshot) {
                                 if (snapshot.connectionState ==
                                     ConnectionState.done) {
+                                  _controller.play();
                                   return InkWell(
                                     onTap: () {
                                       setState(() {
@@ -155,7 +147,19 @@ class _PostItemState extends State<PostItem> {
                                   );
                                 } else {
                                   return Center(
-                                    child: CircularProgressIndicator(),
+                                    child: Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        CircularProgressIndicator(),
+                                        SizedBox(height: 3),
+                                        Text("Loading Slinkshot",
+                                            style: TextStyle(
+                                                color: Colors.white,
+                                                fontWeight: FontWeight.normal,
+                                                fontSize: 14))
+                                      ],
+                                    ),
                                   );
                                 }
                               },
@@ -184,18 +188,6 @@ class _PostItemState extends State<PostItem> {
                             fontSize: 15,
                           ),
                         ),
-                        // SizedBox(width: 24),
-                        // Icon(
-                        //   Icons.rate_review,
-                        //   color: carrotOrange,
-                        //   size: 20,
-                        // ),
-                        // SizedBox(width: 6),
-                        // Icon(
-                        //   Icons.data_usage,
-                        //   color: Colors.white,
-                        //   size: 20,
-                        // )
                       ],
                     ),
                   ),
