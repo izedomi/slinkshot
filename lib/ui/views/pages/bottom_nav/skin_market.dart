@@ -131,11 +131,6 @@ class SkinSearch extends SearchDelegate<Skin> {
 
   @override
   ThemeData appBarTheme(BuildContext context) {
-    
-    // return super.appBarTheme(context).copyWith(
-    //   primaryColor: bunkerBlack,
-
-    // );
 
     return Theme.of(context).copyWith(
       appBarTheme: AppBarTheme(
@@ -148,18 +143,7 @@ class SkinSearch extends SearchDelegate<Skin> {
             fontSize: 18
           )
       ),
-  
-      // inputDecorationTheme: InputDecorationTheme(
-      //   hintStyle: Theme.of(context).t
-      // )
     ));
-      
-    // return ThemeData(
-    //   primaryColor: bunkerBlack,
-    //   hintColor: dustyGrey,
-    //   indicatorColor: Colors.yellow,
-    //   textSelectionColor: 
-    // );
   }
 
   @override
