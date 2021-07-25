@@ -20,32 +20,9 @@ class PostItem extends StatefulWidget {
 }
 
 class _PostItemState extends State<PostItem> {
-  Post post;
+
   VideoPlayerController _controller;
   var _rand = new Random();
-
-  // @override
-  // void initState() {
-  //   post = widget.post;
-  //   super.initState();
-  //   // _controller = VideoPlayerController.asset('assets/bbb.mp4')
-  //   //   ..initialize().then((_) {
-  //   //     // Ensure the first frame is shown after the video is initialized, even before the play button has been pressed.
-  //   //     setState(() {});
-  //   //   });
-  //    _controller = VideoPlayerController.network(
-  //       'https://sample-videos.com/video123/mp4/720/big_buck_bunny_720p_20mb.mp4')
-  //     ..initialize().then((_) {
-  //       // Ensure the first frame is shown after the video is initialized, even before the play button has been pressed.
-  //       setState(() {});
-  //     });
-  // }
-
-  // @override
-  // void dispose() {
-  //   super.dispose();
-  //   _controller.dispose();
-  // }
 
   Future<void> _initializeVideoPlayerFuture;
   BoxDecoration kGradientBoxDecoration;
@@ -54,17 +31,14 @@ class _PostItemState extends State<PostItem> {
 
   @override
   void initState() {
-    post = widget.post;
-    print('lfskflksflslfsfksflsfkl');
 
     colorIndex = _rand.nextInt(borderGradients.length - 1);
-
     kGradientBoxDecoration =
         gradientBoxDecoration(borderRadius: 16, colorIndex: colorIndex);
     kInnerDecoration = innerDecoration(borderRadius: 16);
 
-    if (post.format.type.toLowerCase() != "photo") {
-      _controller = VideoPlayerController.network(post.contentUrl);
+    if (widget.post.format.type.toLowerCase() != "photo") {
+      _controller = VideoPlayerController.network(widget.post.contentUrl);
       _initializeVideoPlayerFuture = _controller.initialize();
       _controller.setLooping(false);
       _controller.setVolume(1.0);
@@ -75,7 +49,7 @@ class _PostItemState extends State<PostItem> {
 
   @override
   void dispose() {
-    if (post.format.type.toLowerCase() != "photo") {
+    if (widget.post.format.type.toLowerCase() != "photo") {
       _controller.dispose();
     }
     super.dispose();
@@ -84,7 +58,7 @@ class _PostItemState extends State<PostItem> {
   @override
   Widget build(BuildContext context) {
     return VisibilityDetector(
-      key: Key(post.id.toString()),
+      key: Key(widget.post.id.toString()),
       onVisibilityChanged: (visibilityInfo) {
         var visiblePercentage = visibilityInfo.visibleFraction * 100;
         debugPrint(
@@ -105,9 +79,9 @@ class _PostItemState extends State<PostItem> {
                   Positioned.fill(
                     child: ClipRRect(
                       borderRadius: BorderRadius.all(Radius.circular(16)),
-                      child: post.format.type.toLowerCase() == "photo"
+                      child: widget.post.format.type.toLowerCase() == "photo"
                           ? CachedNetworkImage(
-                              imageUrl: post.contentUrl,
+                              imageUrl: widget.post.contentUrl,
                               width: width(context),
                               height: double.infinity,
                               fit: BoxFit.cover,
@@ -179,7 +153,7 @@ class _PostItemState extends State<PostItem> {
                         ),
                         SizedBox(width: 8),
                         Text(
-                          post.user.name ?? "",
+                          widget.post.user.name ?? "",
                           overflow: TextOverflow.ellipsis,
                           maxLines: 1,
                           style: TextStyle(
@@ -203,7 +177,7 @@ class _PostItemState extends State<PostItem> {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Text(
-                                post.gameTitle ?? "",
+                                widget.post.gameTitle ?? "",
                                 style: TextStyle(
                                     color: Colors.white,
                                     fontWeight: FontWeight.w800,
@@ -275,7 +249,7 @@ class _PostItemState extends State<PostItem> {
                                     mainAxisAlignment: MainAxisAlignment.start,
                                     children: [
                                       Text(
-                                        post.title ?? "",
+                                        widget.post.title ?? "",
                                         overflow: TextOverflow.ellipsis,
                                         maxLines: 1,
                                         style: TextStyle(
@@ -285,7 +259,7 @@ class _PostItemState extends State<PostItem> {
                                         ),
                                       ),
                                       Text(
-                                        post.description ?? "",
+                                        widget.post.description ?? "",
                                         overflow: TextOverflow.ellipsis,
                                         maxLines: 4,
                                         style: TextStyle(
@@ -306,7 +280,7 @@ class _PostItemState extends State<PostItem> {
                                               MainAxisAlignment.center,
                                           children: [
                                             Text(
-                                              post.views.toString() ?? "",
+                                              widget.post.views.toString() ?? "",
                                               style: TextStyle(
                                                 color: galleryGrey,
                                                 fontWeight: FontWeight.w800,
@@ -325,13 +299,13 @@ class _PostItemState extends State<PostItem> {
                                         ),
                                         Icon(
                                           Icons.favorite_border,
-                                          color: post.likes > 0
+                                          color: widget.post.likes > 0
                                               ? carrotOrange
                                               : baliGrey,
                                           size: 30,
                                         ),
                                         Text(
-                                          post.likes.toString() ?? "",
+                                          widget.post.likes.toString() ?? "",
                                           style: TextStyle(
                                             color: galleryGrey,
                                             fontWeight: FontWeight.w800,
@@ -345,7 +319,7 @@ class _PostItemState extends State<PostItem> {
                                           size: 30,
                                         ),
                                         Text(
-                                          post.comments.length.toString() ?? "",
+                                          widget.post.comments.length.toString() ?? "",
                                           style: TextStyle(
                                             color: galleryGrey,
                                             fontWeight: FontWeight.w800,

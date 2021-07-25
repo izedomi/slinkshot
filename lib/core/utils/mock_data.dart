@@ -181,7 +181,7 @@ List<Post> posts = [
       title: "Te Amo",
       description: "I deserve this crown. what do you think?",
       contentUrl: "https://flutter.github.io/assets-for-api-docs/assets/videos/bee.mp4",
-      gameTitle: "Mortal Kombat",
+      gameTitle: "Apex Legends",
       views: 41,
       likes: 29,
       comments: comments,
@@ -194,7 +194,7 @@ List<Post> posts = [
           "Undisputed champions rocking as never before. Gypsy king is back indeed",
       contentUrl:
           "https://resizing.flixster.com/AxFdO4BGadAbNf6YtVO6sZoJd0s=/506x652/v2/https://flxt.tmsimg.com/v9/AllPhotos/591658/591658_v9_bb.jpg",
-      gameTitle: "Apex Legends",
+      gameTitle: "Mortal Kombat",
       comments: comments,
       format: formats[1],
       user: users[0]),

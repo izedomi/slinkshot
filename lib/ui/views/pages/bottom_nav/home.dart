@@ -51,7 +51,6 @@ class _HomeState extends State<Home> {
                       color: bunkerBlack,
                       child: Column(
                         children: [
-                          //SafeArea(child: Text("data", style: TextStyle(color: Colors.white),))
                           SafeArea(
                             child: Container(
                               height: 60,
